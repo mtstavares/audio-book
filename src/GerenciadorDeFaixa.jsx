@@ -1,6 +1,12 @@
-const GerenciadorDeFaixa = ({faixa, referencia}) => {
+const GerenciadorDeFaixa = ({faixa, referencia, setTempoTotalFaixa, setTempoAtualFaixa}) => {
   return (
-    <audio src={faixa} ref={referencia}></audio>
+    <audio
+     src={faixa} 
+     ref={referencia} 
+     onLoadedMetadata={() => setTempoTotalFaixa(referencia.current.duration)}
+     onTimeUpdate={() => setTempoAtualFaixa(referencia.current.currentTime)}>
+
+     </audio>
   )
 }
 

@@ -137,6 +137,10 @@
   margin-top: 0.1rem;
 }
 
+.metricas-tempo p:first-child {
+  color: rgba(255, 255, 255, 0.445);
+}
+
 .caixa-botoes {
   display: flex;
   justify-content: center;
@@ -156,4 +160,8 @@
 .play-pause {
   background: yellow;
   font-size: 3rem;
+}
+
+p, i{
+  color: white;
 }

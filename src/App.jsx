@@ -14,6 +14,7 @@ import SeletorCapitulos from './SeletorCapitulos'
 import BotoesControles from './BotoesControles'
 import Capa from './Capa'
 import GerenciadorDeFaixa from './GerenciadorDeFaixa'
+import ContainerProgresso from './ContainerProgresso'
 
 function App() {
   // Referência ao elemento <audio> para controlar play/pause/etc
@@ -24,6 +25,10 @@ function App() {
 
   // Estado: índice da faixa/capítulo atual dentro do array "livro"
   const [faixaAtual, setFaixaAtual] = useState(0)
+
+  const [tempoTotalFaixa, setTempoTotalFaixa] = useState(0)
+
+  const [tempoAtualFaixa, setTempoAtualFaixa] = useState(0)
 
   // Objeto com metadados do "álbum"/livro e a lista de capítulos
   const informacoesLivro = {
@@ -110,7 +115,14 @@ function App() {
         faixa={informacoesLivro.capitulos[faixaAtual]}
         referencia={audioRef}
         onEnded={aoTerminarFaixa}
+        setTempoTotalFaixa={setTempoTotalFaixa}
+        setTempoAtualFaixa={setTempoAtualFaixa}
+
       />
+
+      <ContainerProgresso 
+      tempoTotalFaixa={tempoTotalFaixa} 
+      tempoAtualFaixa={tempoAtualFaixa} />
 
       {/* Botões de controle: play/pause, próximo e anterior */}
       <BotoesControles
