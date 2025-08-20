@@ -30,6 +30,8 @@ function App() {
 
   const [tempoAtualFaixa, setTempoAtualFaixa] = useState(0)
 
+  const barraProgressoRef = useRef(null)
+
   // Objeto com metadados do "álbum"/livro e a lista de capítulos
   const informacoesLivro = {
     nome: 'Memórias Póstumas de Brás Cubas',
@@ -106,6 +108,12 @@ function App() {
     audioRef.current.currentTime -= 15
   }
 
+  const avancarPara = (event) => {
+    const largura = barraProgressoRef.current.clientWidth
+    const novoTempo = (event.nativeEvent.offsetX/largura) * tempoTotalFaixa
+    audioRef.current.currentTime = novoTempo
+  }
+
   // Renderização da interface
   return (
     <>
@@ -130,7 +138,9 @@ function App() {
 
       <ContainerProgresso 
       tempoTotalFaixa={tempoTotalFaixa} 
-      tempoAtualFaixa={tempoAtualFaixa} />
+      tempoAtualFaixa={tempoAtualFaixa} 
+      referencia={barraProgressoRef} 
+      avancarPara={avancarPara} />
 
       {/* Botões de controle: play/pause, próximo e anterior */}
       <BotoesControles

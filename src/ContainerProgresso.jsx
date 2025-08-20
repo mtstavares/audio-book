@@ -9,8 +9,8 @@ const ContainerProgresso = (props) => {
     }
 
   return (
-    <section className="container-progresso">
-        <div className="progresso-total" >
+    <section className="container-progresso" onClick={props.avancarPara}>
+        <div className="progresso-total" ref={props.referencia} onClick={props.avancarPara}>
             <div className="progresso-atual" style={{
             width: `${props.tempoAtualFaixa / props.tempoTotalFaixa * 100}%`
         }}></div>
