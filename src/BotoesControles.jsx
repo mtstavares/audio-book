@@ -4,13 +4,13 @@ const BotoesControles = (props) => {
         <button onClick={() => props.retrocederFaixa()}>
             <i className="bi bi-skip-start"></i>
         </button>
-        <button>
+        <button onClick={() => props.voltar15s()}>
             <i className="bi bi-skip-backward"></i>
         </button>
         <button onClick={() => props.tocarFaixa()}>
             <i className={`bi bi-${props.taTocando ? 'pause' : 'play'}-circle-fill`}></i>
         </button>
-        <button >
+        <button onClick={() => props.avancar15s()}>
             <i className="bi bi-skip-forward"></i>
         </button>
         <button onClick={() => props.avancarFaixa()}>

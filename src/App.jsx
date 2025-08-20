@@ -81,7 +81,7 @@ function App() {
         setTaTocando(false)
       })
     }
-  }, [faixaAtual, taTocando]) // Reage a mudanças de faixa e do próprio estado "taTocando"
+  }, [faixaAtual]) // Reage a mudanças de faixa e do próprio estado "taTocando"
 
   // Avança para a próxima faixa com "wrap-around" (vai para 0 no fim)
   const avancarFaixa = () => {
@@ -96,6 +96,14 @@ function App() {
   // Handler para quando a faixa termina naturalmente: avança para a próxima
   const aoTerminarFaixa = () => {
     avancarFaixa()
+  }
+
+  const avancar15s = () => {
+    audioRef.current.currentTime += 15
+  }
+
+  const voltar15s = () => {
+    audioRef.current.currentTime -= 15
   }
 
   // Renderização da interface
@@ -131,6 +139,8 @@ function App() {
         tocarFaixa={tocarOuPausar}
         avancarFaixa={avancarFaixa}
         retrocederFaixa={retrocederFaixa}
+        avancar15s={avancar15s}
+        voltar15s = {voltar15s}
       />
     </>
   )
