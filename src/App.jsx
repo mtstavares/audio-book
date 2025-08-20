@@ -85,6 +85,29 @@ function App() {
     }
   }, [faixaAtual]) // Reage a mudanças de faixa e do próprio estado "taTocando"
 
+  // salvar o local storage
+  // salvar
+  useEffect(() => {
+    const a = audioRef.current; if (!a) return
+    const id = setInterval(() => {
+      const key = `posicao:${informacoesLivro.nome}:${faixaAtual}`
+      localStorage.setItem(key, String(Math.floor(a.currentTime || 0)))
+    }, 5000)
+    return () => clearInterval(id)
+  }, [faixaAtual, informacoesLivro.nome])
+
+  // restaurar
+  useEffect(() => {
+    if (!tempoTotalFaixa) return
+    const key = `posicao:${informacoesLivro.nome}:${faixaAtual}`
+    const salvo = Number(localStorage.getItem(key) || 0)
+    if (salvo > 0 && audioRef.current) {
+      audioRef.current.currentTime = Math.min(salvo, tempoTotalFaixa)
+      setTempoAtualFaixa(audioRef.current.currentTime)
+    }
+  }, [faixaAtual, tempoTotalFaixa])
+
+
   // Avança para a próxima faixa com "wrap-around" (vai para 0 no fim)
   const avancarFaixa = () => {
     setFaixaAtual(prev => (prev + 1) % informacoesLivro.totalCapitulos)
@@ -110,7 +133,7 @@ function App() {
 
   const avancarPara = (event) => {
     const largura = barraProgressoRef.current.clientWidth
-    const novoTempo = (event.nativeEvent.offsetX/largura) * tempoTotalFaixa
+    const novoTempo = (event.nativeEvent.offsetX / largura) * tempoTotalFaixa
     audioRef.current.currentTime = novoTempo
   }
 
@@ -136,11 +159,11 @@ function App() {
 
       />
 
-      <ContainerProgresso 
-      tempoTotalFaixa={tempoTotalFaixa} 
-      tempoAtualFaixa={tempoAtualFaixa} 
-      referencia={barraProgressoRef} 
-      avancarPara={avancarPara} />
+      <ContainerProgresso
+        tempoTotalFaixa={tempoTotalFaixa}
+        tempoAtualFaixa={tempoAtualFaixa}
+        referencia={barraProgressoRef}
+        avancarPara={avancarPara} />
 
       {/* Botões de controle: play/pause, próximo e anterior */}
       <BotoesControles
@@ -150,7 +173,7 @@ function App() {
         avancarFaixa={avancarFaixa}
         retrocederFaixa={retrocederFaixa}
         avancar15s={avancar15s}
-        voltar15s = {voltar15s}
+        voltar15s={voltar15s}
       />
     </>
   )
